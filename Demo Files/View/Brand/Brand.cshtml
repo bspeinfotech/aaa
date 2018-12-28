@@ -1,0 +1,1478 @@
+﻿
+<style>
+    .gird-item-compare, .pro-list-compare {
+        display: none;
+    }
+
+    .pro-col-option {
+        float: left;
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        color: #d87200;
+    }
+
+    .filter-clear {
+        text-align: right;
+        float: right;
+        font-size: 14px;
+        line-height: 26px;
+        color: #e09d00 !important;
+        cursor: pointer;
+    }
+</style>
+
+
+
+@*<link rel="shortcut icon" href="images/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant:300,400,400i,500,500i,600,700|Montserrat:200,300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/bootstrap-dropdownhover.min.css" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/plugins/sweetalert/css/sweetalert.min.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/style-master.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/style-index.css" />*@
+<script src="js/jquery.min.js"></script>
+
+
+
+<div class="">
+    <div class="box panel-top">
+
+        <section class="section-main p-0">
+            <div class="col-sm-12 col-xs-12 sub-page-banner-bg">
+                <div class="container ">
+                    <div class="col-sm-9 col-xs-12 sub-page-banner-img">
+                        @Html.Raw(ViewBag.BrandBanner)
+                    </div>
+                    <div class="col-sm-3 col-xs-12 sub-page-banner-text">
+                        @Html.Raw(ViewBag.BrandDescription)
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-xs-12 breadcrumbs breadcrumbspro p-0">
+                <div class="container">
+                    @Html.Raw(ViewBag.BreadCrumb)
+                </div>
+            </div>
+        </section>
+        <section class="section-main product-list-main p-0">
+            <div class="container">
+                <div class="col-lg-3 col-sm-3 col-xs-12 p-0 hidden-xs product-filter">
+                    <div class="side-box filter-section">
+                        <div class="side-box-title">Filter By <a onclick="return ClearFilter();" class="filter-clear">Clear</a></div>
+                        @{
+                            if (ViewBag.BrandGender != "")
+                            {
+                                <div class="side-box-sec" id="divGenderFacet">
+                                    <div class="side-box-sec-title">Gender</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            <ul id="ulGender" class="list-unstyled filter-content filter-box-6">
+                                                @Html.Raw(ViewBag.BrandGender)
+                                            </ul>
+                                        </form>
+                                        @Html.Raw(ViewBag.BrandGenderLoadMore)
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        @{
+                            if (ViewBag.BrandCategory != "")
+                            {
+                                <div class="side-box-sec" id="divCategoryFacet">
+                                    <div class="side-box-sec-title">Categories</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            @*<input class="form-control m-b-10" placeholder="Search Category">*@
+                                            <ul id="ulCategory" class="list-unstyled limited-list filter-content filter-box-1">
+                                                @Html.Raw(ViewBag.BrandCategory)
+                                            </ul>
+                                            @Html.Raw(ViewBag.BrandCategoryLoadMore)
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @{
+                            if (ViewBag.BrandFrameType != "")
+                            {
+                                <div class="side-box-sec" id="divFrameTypeFacet">
+                                    <div class="side-box-sec-title">Frame Type</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            <ul id="ulFrameType" class="list-unstyled limited-list filter-content filter-box-5">
+                                                @Html.Raw(ViewBag.BrandFrameType)
+                                            </ul>
+                                            @Html.Raw(ViewBag.BrandFrameTypeLoadMore)
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        @{
+                            if (ViewBag.BrandFrameShape != "")
+                            {
+                                <div class="side-box-sec" id="divFrameShapeFacet">
+                                    <div class="side-box-sec-title">Frame Shape</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            <ul id="ulFrameShape" class="list-unstyled limited-list filter-content filter-box-2">
+                                                @Html.Raw(ViewBag.BrandFrameShape)
+                                            </ul>
+                                            @Html.Raw(ViewBag.BrandFrameShapeLoadMore)
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        @{
+                            if (ViewBag.BrandLensColor != "")
+                            {
+                                <div class="side-box-sec" id="divLensColorFacet">
+                                    <div class="side-box-sec-title">Lens Color</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            <ul id="ulLensColor" class="list-unstyled limited-list filter-content filter-box-3">
+                                                @Html.Raw(ViewBag.BrandLensColor)
+                                            </ul>
+                                            @Html.Raw(ViewBag.BrandLensColorLoadMore)
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        @{
+                            if (ViewBag.BrandFrameColor != "")
+                            {
+                                <div class="side-box-sec" id="divFrameColorFacet">
+                                    <div class="side-box-sec-title">Frame Color</div>
+                                    <div class="side-box-sec-desc">
+                                        <form>
+                                            <ul id="ulFrameColor" class="list-unstyled limited-list filter-content filter-box-3">
+                                                @Html.Raw(ViewBag.BrandFrameColor)
+                                            </ul>
+                                            @Html.Raw(ViewBag.BrandFrameColorLoadMore)
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="outer-tab-mob-desc visible-xs-inline-block relative m-b-10">
+                    <div class="filter-box">
+                        <div class="filter-title">
+                            <span class="m-t-5 inline-block">Filter</span>
+                            <div class="pull-right"> <a href="#" class="btn btn-secondary filter-reset m-r-10">Reset</a><a href="#" class="btn btn-default filter-done">Done</a> </div>
+                        </div>
+                        <div class="mob-filter-box">
+                            <div class="pro-pagination">
+                                <div class="page-filter" style="display:none">
+                                    <div class="clear-list">
+                                        <a href="#"><i class="fa fa-close"></i></a>
+                                        <div class="clear-list-name"><strong>Brands:</strong> Rayban</div>
+                                    </div>
+                                    <div class="clear-list">
+                                        <a href="#"><i class="fa fa-close"></i></a>
+                                        <div class="clear-list-name">
+                                            <strong>Color:</strong>
+                                            <div class="inline-block">
+                                                2 selected <i class="fa fa-caret-down"></i>
+                                                <ul>
+                                                    <li><a href="#">Clear All</a></li>
+                                                    <li><a href="#">Black <i class="fa fa-close"></i></a></li>
+                                                    <li><a href="#">Blue <i class="fa fa-close"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear-list">
+                                        <a href="#"><i class="fa fa-close"></i></a>
+                                        <div class="clear-list-name"><strong>Shape:</strong> Aviator</div>
+                                    </div>
+                                    <div class="clear-list">
+                                        <a href="#"><i class="fa fa-close"></i></a>
+                                        <div class="clear-list-name"><strong>Gender:</strong> Male</div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <ul>
+                                <li id="ddMoGenderFacet" class="dropdown">
+                                    <span class="block filter-in-btn">Gender <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoGender" class="filter-content filter-box-6">
+                                            @Html.Raw(ViewBag.BrandGender)
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="ddMoCategoryFacet" class="dropdown">
+                                    <span class="block filter-in-btn">Category <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoCategory" class="filter-content filter-box-1">
+                                            @Html.Raw(ViewBag.BrandCategory)
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="ddMoFrameTypeFacet" class="dropdown">
+                                    <span class="block filter-in-btn">Type <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoFrameType" class="filter-content filter-box-5">
+                                            @Html.Raw(ViewBag.BrandFrameType)
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="ddMoFrameShapeFacet" class="dropdown">
+                                    <span class="block filter-in-btn">Frame Shape <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoFrameShape" class="filter-content filter-box-2">
+                                            @Html.Raw(ViewBag.BrandFrameShape)
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="ddMoLensColorFacet" class="dropdown">
+                                    <span class="block filter-in-btn">Lens Color <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoLensColor" class="filter-content filter-box-4">
+                                            @Html.Raw(ViewBag.BrandLensColor)
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li id="ddMoFrameColorFacet" class=" dropdown">
+                                    <span class="block filter-in-btn">Frame Color <i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>
+                                    <div class="inner-tab-desc">
+                                        <ul id="ulMoFrameColor" class=" filter-content filter-box-3">
+                                            @Html.Raw(ViewBag.BrandFrameColor)
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-default pull-right hidden-md visible-sm visible-xs filter-btn">Filter</a>
+                <div class="col-lg-9 col-sm-9 col-xs-12 p-0 productlisting-main">
+                    <div class="col-lg-12 col-xs-12 p-list-top-row">
+                        <div class="col-lg-10 text-left col-xs-12 xs-p-0">
+                            <label class="page-showing" style="margin-right:20px">Total <span class="page-results"> @Html.Raw(ViewBag.ProductsCount)</span></label>
+                            <label class="checkbox-inline checkbox-inline-prescription">
+                                <span onchange="pagerresultsearch();"><input id="chkPrescription" type="checkbox" class="hidden" data-toggle="toggle" data-style="ios" data-on="Yes" data-off="No" data-onstyle="success" data-offstyle="danger" @ViewBag.Prescription> </span> Available for prescription
+                            </label>
+                            <label class="checkbox-inline checkbox-inline-prescription">
+                                <span onchange="pagerresultsearch();"> <input id="chkPolarized" type="checkbox" class="hidden" data-toggle="toggle" data-style="ios" data-on="Yes" data-off="No" data-onstyle="success" data-offstyle="danger" @ViewBag.Polarized></span> Polarized
+                            </label>
+                            <label class="checkbox-inline checkbox-inline-prescription">
+                                <span onchange="pagerresultsearch();" id="spanStock"><input id="chkInStock" type="checkbox" class="hidden" data-toggle="toggle" data-style="ios" data-on="Yes" data-off="No" data-onstyle="success" data-offstyle="danger" @ViewBag.InStock></span> In Stock
+                            </label>
+                        </div>
+                        <div class="col-lg-2 text-right col-xs-12 xs-p-0">
+                            <select id="ddlSorting" class="sorting-form form-control pull-right w-auto block" onchange="Shorting();">
+                                @Html.Raw(ViewBag.SortBy)
+                            </select>
+                        </div>
+                    </div>
+                    <div id="div1" class="col-sm-12 col-xs-12 p-0">
+                        @Html.Raw(ViewBag.GridData)
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div>
+
+    <input type="hidden" id="hdnbrwosertype" value="0" />
+    <input type="hidden" id="hdntotalrecord" value="0" />
+    <input type="hidden" id="hdnisexists" value="0" />
+    <input type="hidden" id="hdnguid" name="hdnguid" value="" />
+    <input type="hidden" id="hdnurl" name="" value="" />
+    <input type="hidden" value="0" id="hdnparentid" />
+    <input type="hidden" id="Prdctcnt1" value="0" />
+
+    <script>
+    @Html.Raw(ViewBag.BrandListHTML)
+        function firsttimeseturl(url, id) {
+            $('#hdnurl').val(url);
+        }
+        function getresults(result, ismobile, ispagestat) {
+
+            $('#hdntotalrecord').val(result.replace(' Results', '').replace(' Result', ''));
+
+            if ($('#hdntotalrecord').val() == '0') {
+                $('.page-nav').hide();
+            }
+            else {
+                $('.page-nav').show();
+            }
+            $('#hdnisexists').val(ispagestat);
+        }
+    </script>
+
+    <script>
+
+        function setcompareproduct(pid, id) {
+            if ($(id).prop("checked") == true) {
+                var idlist = $(id).attr("id");
+                var allcheckbox = document.getElementById('divgridlist').getElementsByTagName('input');
+
+                if (allcheckbox.length > 0) {
+                    for (var i = 0; i < allcheckbox.length; i++) {
+                        if (allcheckbox[i].id.toString().toLowerCase() == idlist.toString().toLowerCase()) {
+                            allcheckbox[i].checked = true;
+                        }
+                    }
+                }
+                allcheckbox = document.getElementById('div1').getElementsByTagName('input');
+
+                if (allcheckbox.length > 0) {
+
+                    for (var i = 0; i < allcheckbox.length; i++) {
+                        if (allcheckbox[i].id.toString().toLowerCase() == idlist.toString().toLowerCase()) {
+                            allcheckbox[i].checked = true;
+                        }
+                    }
+                }
+
+                //$('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><div class="loader"><span></span><span></span><span></span></div></div>');
+                $('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><img src="/images/ajaxloader.gif" style="position:absolute;top:50%;" /></div>');
+
+                $.post(url = "/Brand/CreateCookie", { productIds: pid }, function (data) {
+                    $('#comparecount').html(data.comaprecount);
+                    $('#aproductcomapre').removeAttr('href');
+                    if (data.comaprecount == "0") {
+                        $('#aproductcomapre').attr('href', 'javascript:void(0);');
+                    }
+                    else {
+                        $('#aproductcomapre').attr('href', '/itempage/Productcomapre');
+                    }
+                    $('.modal-backdrop').remove();
+                });
+            }
+            else {
+                var idlist = $(id).attr("id");
+
+                var allcheckbox = document.getElementById('divgridlist').getElementsByTagName('input');
+                if (allcheckbox.length > 0) {
+                    for (var i = 0; i < allcheckbox.length; i++) {
+                        if (allcheckbox[i].id.toString().toLowerCase() == idlist.toString().toLowerCase()) {
+                            allcheckbox[i].checked = false;
+                        }
+                    }
+                }
+                allcheckbox = document.getElementById('div1').getElementsByTagName('input');
+                if (allcheckbox.length > 0) {
+                    for (var i = 0; i < allcheckbox.length; i++) {
+                        if (allcheckbox[i].id.toString().toLowerCase() == idlist.toString().toLowerCase()) {
+                            allcheckbox[i].checked = false;
+                        }
+                    }
+                }
+
+                //$('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><div class="loader"><span></span><span></span><span></span></div></div>');
+                $('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><img src="/images/ajaxloader.gif" style="position:absolute;top:50%;" /></div>');
+
+                $.post(url = "/Brand/RemoveCookie", { productIds: pid }, function (data) {
+                    $('#comparecount').html(data.comaprecount);
+                    $('#aproductcomapre').removeAttr('href');
+                    if (data.comaprecount == "0") {
+                        $('#aproductcomapre').attr('href', 'javascript:void(0);');
+                    }
+                    else {
+                        $('#aproductcomapre').attr('href', '/itempage/Productcomapre');
+                    }
+                    $('.modal-backdrop').remove();
+                });
+            }
+
+        }
+        function getimagechange(imgname, id, li, ul) {
+            $('#' + ul + ' li').removeClass('active');
+            $('#' + li).toggleClass('active');
+            document.getElementById(id).src = imgname;
+        }
+
+        function checkit(id) {
+            var id = "#chk_" + id.substring(3);
+
+            if ($(id).prop("checked") == true) {
+                $(id).attr('checked', false);
+            }
+            else {
+                $(id).attr('checked', true);
+            }
+
+            pagerresultsearch();
+            return false;
+        }
+
+
+        $(document).ready(function () {
+
+            var chkdata = $('#divsorradio').find('input');
+            for (var i = 0; i < chkdata.length; i++) {
+                if (chkdata[i].checked == true) {
+                    $('.filter-in-btn span').html($(chkdata[i]).next('label').html());
+                }
+            }
+
+            /*Mobile Menou accordion Start*/
+            //$('.filter-in-btn').click(function () {
+
+            //    $(this).toggleClass('active');
+
+            //$('.inner-tab-desc').toggleClass('active');
+            //if ($('.inner-tab-desc').hasClass('active')) {
+            //    $('.inner-tab-desc').show();
+            //}
+            //else {
+            //    $('.inner-tab-desc').hide();
+            //}
+            //chkdata = $('#divsorradio').find('input');
+            //for (var i = 0; i < chkdata.length; i++) {
+            //    if (chkdata[i].checked == true) {
+            //        $('.filter-in-btn span').html($(chkdata[i]).next('label').html());
+            //    }
+            //}
+            //});
+            /*Mobile Menou accordion End*/
+
+        });
+
+        function hidetablist(id, id1) {
+            $('#' + id).show();
+            $('#' + id1).hide();
+        }
+
+        var allgender = '';
+        var allCategory = '';
+        var allFrameType = '';
+        var allFrameShape = '';
+        var allLensColor = '';
+        var allFrameColor = '';
+
+        var sortby = '';
+        var isPrescription = false;
+        var isPolarized = false;
+        var isInStock = false;
+        var allpaging = 0;
+        var allrecord = 0;
+
+        var searchName = '';
+        var searchvalue = '';
+
+        var Pagestart = 0;
+        var Pageend = 0;
+
+
+        function Shorting() {
+
+            $('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><img src="/images/ajaxloader.gif" style="position:absolute;top:50%;" /></div>');
+
+            BindUrl(0);
+
+            sortby = $("#ddlSorting").val();
+
+            var facetData = {
+                "Sortby": sortby,
+                "manufactureId": '@Request.QueryString["manufacturerId"].ToString()'
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Brand/ShortingProductsAndBinding",
+                datatype: "json",
+                data: JSON.stringify(facetData),
+                success: function (data) {
+
+                    $("#div1").html(data);
+                    $("#divgridlist").html(data);
+
+                    if ($('#div1').css('display') == 'block') {
+                        $("#divgridlist").hide();
+                        $("#div1").show();
+                    }
+                    else {
+                        $("#divgridlist").show();
+                        $("#div1").hide();
+                    }
+
+                    $('.modal-backdrop').remove();
+                }
+            });
+        }
+
+        function pagerresultsearch() {
+
+            GetFilterData();
+
+            getdatabysearch();
+        }
+
+        function GetFilterData() {
+
+            $('body').append('<div class="modal-backdrop fade in" style="opacity:0.5;background-color:#eee;text-align:center;width:100%;"><img src="/images/ajaxloader.gif" style="position:absolute;top:50%;" /></div>');
+
+            allgender = '';
+            allCategory = '';
+            allFrameType = '';
+            allFrameShape = '';
+            allLensColor = '';
+            allFrameColor = '';
+
+            var searchstr = '';
+            var alldata = '';
+            var alldata1 = '';
+
+            if (document.getElementById('ulGender') != null) {
+                try {
+                    alldata = $('#ulGender').find('input');
+                    alldata1 = $('#ulGender').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allgender = allgender + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+
+                    if (allgender != '') {
+                        allgender = allgender.substring(0, allgender.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+            if (document.getElementById('ulCategory') != null) {
+                try {
+                    alldata = $('#ulCategory').find('input');
+                    alldata1 = $('#ulCategory').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allCategory = allCategory + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+                    if (allCategory != '') {
+                        allCategory = allCategory.substring(0, allCategory.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+            if (document.getElementById('ulFrameType') != null) {
+                try {
+                    alldata = $('#ulFrameType').find('input');
+                    alldata1 = $('#ulFrameType').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allFrameType = allFrameType + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+                    if (allFrameType != '') {
+                        allFrameType = allFrameType.substring(0, allFrameType.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+            if (document.getElementById('ulFrameShape') != null) {
+                try {
+                    alldata = $('#ulFrameShape').find('input');
+                    alldata1 = $('#ulFrameShape').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allFrameShape = allFrameShape + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+                    if (allFrameShape != '') {
+                        allFrameShape = allFrameShape.substring(0, allFrameShape.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+            if (document.getElementById('ulLensColor') != null) {
+                try {
+                    alldata = $('#ulLensColor').find('input');
+                    alldata1 = $('#ulLensColor p').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allLensColor = allLensColor + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+                    if (allLensColor != '') {
+                        allLensColor = allLensColor.substring(0, allLensColor.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+            if (document.getElementById('ulFrameColor') != null) {
+                try {
+                    alldata = $('#ulFrameColor').find('input');
+                    alldata1 = $('#ulFrameColor p').find('span');
+
+                    for (var i = 0; i < alldata.length; i++) {
+                        if (alldata[i].checked == true) {
+                            allFrameColor = allFrameColor + escape($.trim($(alldata1[i]).html().toString())) + '~';
+                        }
+                    }
+                    if (allFrameColor != '') {
+                        allFrameColor = allFrameColor.substring(0, allFrameColor.length - 1);
+                    }
+                }
+                catch (err) {
+                }
+            }
+
+        }
+
+        function getdatabysearch() {
+
+            MakeStringOfSelectedFilterForUrl(0);   // 0 means no load more
+
+            manufacturerId = '@Request.QueryString["manufacturerId"].ToString()';
+
+            var facetData = {
+                "manufacturerId": manufacturerId,
+                "url": $('#hdnurl').val(),
+                "urltabid": $('#hdntabid').val(),
+                "guidenew": $('#hdnguid').val(),
+                "isAvailablePrescription": isPrescription,
+                "isPolarized": isPolarized,
+                "isInStock": isInStock,
+                "sortby": sortby,
+                "gender": allgender,
+                "category": allCategory,
+                "frameType": allFrameType,
+                "frameShape": allFrameShape,
+                "lensColor": allLensColor,
+                "frameColor": allFrameColor,
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Brand/GetAllfilteredData",
+                datatype: "json",
+                data: JSON.stringify(facetData),
+                success: function (data) {
+
+                    /* start: Changes Title, meta keyword and it's description as per URL. */
+                    if (data.pageTitle != "") {
+                        $('title').html(data.pageTitle);
+                    }
+                    if (data.metaDescription != "") {
+                        $('meta[name=description]').attr('content', data.metaDescription);
+                    }
+                    if (data.metaKeywords != "") {
+                        $('meta[name=keywords]').attr('content', data.metaKeywords);
+                    }
+                    /* end: Changes Title, meta keyword and it's description as per URL. */
+
+                    Pagestart = 0;
+                    Pageend = 0;
+
+                    if (data.SbFacetGender != "") {
+                        $('#divGenderFacet').show();
+                        $('#ddMoGenderFacet').show();
+
+                        if (parseInt(data.SbFacetGendersCount) > 3) {
+                            $("#moreGender").css('display', 'block')
+                        }
+                        else {
+                            $("#moreGender").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divGenderFacet').hide();
+                        $('#ddMoGenderFacet').hide();
+                    }
+
+                    if (data.SbFacetCategory != "") {
+                        $('#divCategoryFacet').show();
+                        $('#ddMoCategoryFacet').show();
+
+                        if (parseInt(data.SbFacetCategoryCount) > 3) {
+                            $("#moreCategory").css('display', 'block')
+                        }
+                        else {
+                            $("#moreCategory").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divCategoryFacet').hide();
+                        $('#ddMoCategoryFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameType != "") {
+                        $('#divFrameTypeFacet').show();
+                        $('#ddMoFrameTypeFacet').show();
+
+                        if (parseInt(data.SbFacetFrameTypesCount) > 3) {
+                            $("#moreFrameType").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameType").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameTypeFacet').hide();
+                        $('#ddMoFrameTypeFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameShape != "") {
+                        $('#divFrameShapeFacet').show();
+                        $('#ddMoFrameShapeFacet').show();
+
+                        if (parseInt(data.SbFacetFrameShapesCount) > 3) {
+                            $("#moreFrameShape").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameShape").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameShapeFacet').hide();
+                        $('#ddMoFrameShapeFacet').hide();
+                    }
+
+                    if (data.SbFacetLensColor != "") {
+                        $('#divLensColorFacet').show();
+                        $('#ddMoLensColorFacet').show();
+
+                        if (parseInt(data.SbFacetLensColorCount) > 3) {
+                            $("#moreLensColor").css('display', 'block')
+                        }
+                        else {
+                            $("#moreLensColor").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divLensColorFacet').hide();
+                        $('#ddMoLensColorFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameColor != "") {
+                        $('#divFrameColorFacet').show();
+                        $('#ddMoFrameColorFacet').show();
+
+                        if (parseInt(data.SbFacetFrameColorCount) > 3) {
+                            $("#moreFrameColor").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameColor").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameColorFacet').hide();
+                        $('#ddMoFrameColorFacet').hide();
+                    }
+
+                    /* Start - Bind new facet data for website view*/
+                    $("#ulGender").html(data.SbFacetGender);
+                    $("#ulCategory").html(data.SbFacetCategory);
+                    $("#ulFrameType").html(data.SbFacetFrameType);
+                    $("#ulFrameShape").html(data.SbFacetFrameShape);
+                    $("#ulLensColor").html(data.SbFacetLensColor);
+                    $("#ulFrameColor").html(data.SbFacetFrameColor);
+                    /* End - Bind new facet data for website view*/
+
+                    /* Start - Bind new facet data for Mobile view*/
+                    $("#ulMoGender").html(data.SbFacetGender);
+                    $("#ulMoCategory").html(data.SbFacetBrand);
+                    $("#ulMoFrameType").html(data.SbFacetFrameType);
+                    $("#ulMoFrameShape").html(data.SbFacetFrameShape);
+                    $("#ulMoLensColor").html(data.SbFacetLensColor);
+                    $("#ulMoFrameColor").html(data.SbFacetFrameColor);
+                    /* End - Bind new facet data for Mobile view*/
+
+                    $("#div1").html(data.strGrid);
+                    $("#divgridlist").html(data.strlist);
+
+                    if ($('#div1').css('display') == 'block') {
+                        $("#divgridlist").hide();
+                        $("#div1").show();
+                    }
+                    else {
+                        $("#divgridlist").show();
+                        $("#div1").hide();
+                    }
+
+                    $('.page-results').html(data.TotalProduct + ' Results');
+                    $('#hdntotalrecord').val(data.TotalProduct.toString().replace(' Results', '').replace(' Result', ''));
+                    if ($('#hdntotalrecord').val() == '0') {
+                        $('.page-nav').hide();
+                    }
+                    else {
+                        $('.page-nav').show();
+                    }
+                    document.getElementById('hdnisexists').value = '0';
+                    $('.modal-backdrop').remove();
+                    allradio = $('#divsorradio').find('input');
+
+                    for (var i = 0; i < allradio.length; i++) {
+                        if (allradio[i].id == sortby) {
+                            allradio[i].checked = true;
+                        }
+                    }
+
+
+                    if ($('#hdnbrwosertype').val() == '1') {
+
+                        $('.filter-btn').click(function () {
+
+
+                            $(this).toggleClass('active').siblings().removeClass('active');
+                            if ($('.sort-box').hasClass('side-slide')) {
+                                $('.sort-box').toggleClass('side-slide');
+                            }
+
+
+                            $('.filter-box').toggleClass('side-slide');
+                            if (!$('.filter-box').hasClass('side-slide')) {
+                                $('.filter-box').addClass('side-slide');
+                            }
+
+                            $('#doc-width').addClass('body-active');
+
+                            $('.outer-tab-mob-desc').addClass('stickypro');
+
+                        });
+
+                        $('.filter-in-btn').click(function () {
+
+                            $(this).toggleClass('active');
+
+                            //$('.inner-tab-desc').toggleClass('active');
+                            //if ($('.inner-tab-desc').hasClass('active')) {
+                            //    $('.inner-tab-desc').show();
+                            //}
+                            //else {
+                            //    $('.inner-tab-desc').hide();
+                            //}
+                            //var chkdata = $('#divsorradio').find('input');
+                            //for (var i = 0; i < chkdata.length; i++) {
+                            //    if (chkdata[i].checked == true) {
+                            //        $('.filter-in-btn span').html($(chkdata[i]).next('label').html());
+                            //    }
+                            //}
+                        });
+
+                        $('.inner-tab-desc').hide();
+
+                        $('.filter-done').click(function () {
+                            $('.filter-btn, .sort-btn').removeClass('active');
+
+                            $('#doc-width').removeClass('body-active');
+                            $('.outer-tab-mob-desc').removeClass('stickypro');
+                        });
+                    }
+
+                    if ($('.inner-tab-desc').hasClass('active')) {
+                        $('.filter-in-btn').click();
+                        $('.inner-tab-desc').hide();
+                    }
+                    eval("$('.pro1').imagesRotation({interval: 1000,intervalFirst: 500,});");
+
+                    // Changes Title, meta keyword and it's description as per URL.
+
+
+                },
+            });
+
+        }
+
+        function loadMoreData() {
+            manufacturerId = '@Request.QueryString["manufacturerId"].ToString()';
+            Getpagingdata(manufacturerId);
+        }
+
+        var allpaging = 0;
+        var allrecord = 0;
+
+        function Getpagingdata(cid) {
+            if (document.getElementById('hdnisexists') != null) {
+                $('#hdnisexists').val('-1');
+
+                GetFilterData();
+
+                MakeStringOfSelectedFilterForUrl(1);   // 1 means load more
+
+                if (parseInt(allrecord) >= parseInt(allpaging)) {
+                    Pagestart = allpaging;
+                    Pageend = parseInt(allpaging) + parseInt(12);
+
+                    if (parseInt(Pageend) > parseInt(allrecord)) {
+                        Pageend = parseInt(allrecord);
+                    }
+
+                    manufacturerId = '@Request.QueryString["manufacturerId"].ToString()';
+
+
+                    var facetData = {
+                        "manufacturerId": manufacturerId,
+                        "urltabid": $('#hdntabid').val(),
+                        "guidenew": $('#hdnguid').val(),
+                        "url": $('#hdnurl').val(),
+                        "startRow": Pagestart,
+                        "endRow": Pageend,
+                        //"isAvailablePrescription": isPrescription,
+                        //"isPolarized": isPolarized,
+                        //"isInStock": isInStock,
+                        //"sortby": sortby,
+                        //"gender": allgender,
+                        //"category": allCategory,
+                        //"frameType": allFrameType,
+                        //"frameShape": allFrameShape,
+                        //"lensColor": allLensColor,
+                        //"frameColor": allFrameColor,
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        url: "/Brand/Getpaggingdata",
+                        datatype: "json",
+                        data: JSON.stringify(facetData),
+                        success: function (data) {
+                            if (data.strGrid != null) {
+                                $("#loadMoreData").remove();
+                            }
+
+                            $("#div1").append(data.strGrid);
+
+                            $('.modal-backdrop').remove();
+
+                            for (var i = Pagestart; i < Pageend; i++) {
+                                if (document.getElementById('divgrid_' + i.toString()) != null) {
+                                    $('#divgrid_' + i.toString() + ' .pro1').imagesRotation({
+                                        interval: 1000,
+                                        intervalFirst: 500,
+                                    });
+                                }
+                            }
+                            $('#hdnisexists').val('0');
+                        }
+                    });
+                }
+            }
+        }
+
+        function BindUrl(isLoadMore) {
+            isPrescription = false;
+            isPolarized = false;
+            isInStock = false;
+
+            sortby = $("#ddlSorting").val();
+
+            if ($("#chkPrescription").prop("checked") == true) {
+                isPrescription = true;
+            }
+
+            if ($("#chkPolarized").prop("checked") == true) {
+                isPolarized = true;
+            }
+            if ($("#chkInStock").prop("checked") == true) {
+                isInStock = true;
+            }
+
+            var url = "";
+            url = $('#hdnurl').val();
+            url = url.substring(url.lastIndexOf('/'));
+            url = url.substring(0, url.indexOf('.html') + 5);
+            url = url + '?sort=' + sortby + '&prescription=' + isPrescription + '&Polarized=' + isPolarized + '&instock=' + isInStock;
+
+            searchName = '';
+            searchvalue = '';
+
+            if (allgender != '') {
+                searchvalue = searchvalue + $.trim(allgender.toLowerCase()) + ',';
+                searchName = searchName + 'gender,';
+            }
+
+            if (allCategory != '') {
+                searchvalue = searchvalue + $.trim(allCategory.toLowerCase()) + ',';
+                searchName = searchName + 'category,';
+            }
+
+            if (allFrameType != '') {
+                searchvalue = searchvalue + $.trim(allFrameType.toLowerCase()) + ',';
+                searchName = searchName + 'frameType,';
+            }
+
+            if (allFrameShape != '') {
+                searchvalue = searchvalue + $.trim(allFrameShape.toLowerCase()) + ',';
+                searchName = searchName + 'frameShape,';
+            }
+
+            if (allLensColor != '') {
+                searchvalue = searchvalue + $.trim(allLensColor.toLowerCase()) + ',';
+                searchName = searchName + 'lensColor,';
+            }
+
+            if (allFrameColor != '') {
+                searchvalue = searchvalue + $.trim(allFrameColor.toLowerCase()) + ',';
+                searchName = searchName + 'frameColor,';
+            }
+
+            if (document.getElementById('hdntabid') != null && document.getElementById('hdntabid').value != '0') {
+                searchvalue = searchvalue + $('#hdntabid').val() + ',';
+                searchName = searchName + 'tab,';
+            }
+
+            if (searchName != '' && searchvalue != '') {
+                searchName = searchName.substring(0, searchName.length - 1);
+                searchvalue = searchvalue.substring(0, searchvalue.length - 1);
+                url = '/' + searchName + '/' + searchvalue + '/' + '@Request.QueryString["manufacturerId"].ToString()' + url;
+            }
+
+            $('#hdnurl').val(url);
+
+            if (isLoadMore == 0)  // 0 means no load more data
+            {
+                history.pushState(null, '', url);
+            }
+        }
+
+        function MakeStringOfSelectedFilterForUrl(isLoadMore) {
+
+            BindUrl(isLoadMore);
+
+            if (searchName.indexOf(',') > -1) {
+                $('meta[name=robots]').remove();
+                $("head").append("<meta name=\"robots\" content=\"noindex,nofollow\">");
+            }
+            else {
+                $('meta[name=robots]').remove();
+            }
+
+            allpaging = parseInt(Pagestart) + parseInt(12);
+            allrecord = parseInt($('#hdntotalrecord').val());
+        }
+
+        function ClearFilter() {
+
+            $("#spanStock").find(".toggle").addClass("btn-success");
+            $("#spanStock").find(".toggle").removeClass("btn-danger off");
+
+            $("#chkInStock").prop('checked', true);
+
+            $("#ddlSorting").html('<option value="a-z">A to Z</option><option value="z-a">Z to A</option><option value="high-low">Price: (High - Low)</option><option value="low-high">Price: (Low - High)</option><option value="bestseller" selected>Best Seller</option>');
+
+            var Url = "";
+            Url = $('#hdnurl').val();
+            Url = Url.substring(Url.lastIndexOf('/'));
+            Url = Url.substring(0, url.indexOf('.html') + 5);
+
+            history.pushState(null, '', url);
+
+            var facetData = {
+                "manufacturerId": '@Request.QueryString["manufacturerId"].ToString()',
+                "url": $('#hdnurl').val(),
+                "urltabid": $('#hdntabid').val(),
+                "guidenew": $('#hdnguid').val(),
+                "isAvailablePrescription": false,
+                "isPolarized": false,
+                "isInStock": true,
+                "sortby": 'bestseller',
+                "gender": '',
+                "category": '',
+                "frameType": '',
+                "frameShape": '',
+                "lensColor": '',
+                "frameColor": '',
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                url: "/Brand/GetAllfilteredData",
+                datatype: "json",
+                data: JSON.stringify(facetData),
+                success: function (data) {
+
+                    /* start: Changes Title, meta keyword and it's description as per URL. */
+                    if (data.pageTitle != "") {
+                        $('title').html(data.pageTitle);
+                    }
+                    if (data.metaDescription != "") {
+                        $('meta[name=description]').attr('content', data.metaDescription);
+                    }
+                    if (data.metaKeywords != "") {
+                        $('meta[name=keywords]').attr('content', data.metaKeywords);
+                    }
+                    /* end: Changes Title, meta keyword and it's description as per URL. */
+
+                    Pagestart = 0;
+                    Pageend = 0;
+
+                    if (data.SbFacetGender != "") {
+                        $('#divGenderFacet').show();
+                        $('#ddMoGenderFacet').show();
+
+                        if (parseInt(data.SbFacetGendersCount) > 3) {
+                            $("#moreGender").css('display', 'block')
+                        }
+                        else {
+                            $("#moreGender").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divGenderFacet').hide();
+                        $('#ddMoGenderFacet').hide();
+                    }
+
+                    if (data.SbFacetCategory != "") {
+                        $('#divCategoryFacet').show();
+                        $('#ddMoCategoryFacet').show();
+
+                        if (parseInt(data.SbFacetCategoryCount) > 3) {
+                            $("#moreCategory").css('display', 'block')
+                        }
+                        else {
+                            $("#moreCategory").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divCategoryFacet').hide();
+                        $('#ddMoCategoryFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameType != "") {
+                        $('#divFrameTypeFacet').show();
+                        $('#ddMoFrameTypeFacet').show();
+
+                        if (parseInt(data.SbFacetFrameTypesCount) > 3) {
+                            $("#moreFrameType").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameType").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameTypeFacet').hide();
+                        $('#ddMoFrameTypeFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameShape != "") {
+                        $('#divFrameShapeFacet').show();
+                        $('#ddMoFrameShapeFacet').show();
+
+                        if (parseInt(data.SbFacetFrameShapesCount) > 3) {
+                            $("#moreFrameShape").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameShape").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameShapeFacet').hide();
+                        $('#ddMoFrameShapeFacet').hide();
+                    }
+
+                    if (data.SbFacetLensColor != "") {
+                        $('#divLensColorFacet').show();
+                        $('#ddMoLensColorFacet').show();
+
+                        if (parseInt(data.SbFacetLensColorCount) > 3) {
+                            $("#moreLensColor").css('display', 'block')
+                        }
+                        else {
+                            $("#moreLensColor").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divLensColorFacet').hide();
+                        $('#ddMoLensColorFacet').hide();
+                    }
+
+                    if (data.SbFacetFrameColor != "") {
+                        $('#divFrameColorFacet').show();
+                        $('#ddMoFrameColorFacet').show();
+
+                        if (parseInt(data.SbFacetFrameColorCount) > 3) {
+                            $("#moreFrameColor").css('display', 'block')
+                        }
+                        else {
+                            $("#moreFrameColor").css('display', 'none')
+                        }
+                    }
+                    else {
+                        $('#divFrameColorFacet').hide();
+                        $('#ddMoFrameColorFacet').hide();
+                    }
+
+                    /* Start - Bind new facet data for website view*/
+                    $("#ulGender").html(data.SbFacetGender);
+                    $("#ulCategory").html(data.SbFacetCategory);
+                    $("#ulFrameType").html(data.SbFacetFrameType);
+                    $("#ulFrameShape").html(data.SbFacetFrameShape);
+                    $("#ulLensColor").html(data.SbFacetLensColor);
+                    $("#ulFrameColor").html(data.SbFacetFrameColor);
+                    /* End - Bind new facet data for website view*/
+
+                    /* Start - Bind new facet data for Mobile view*/
+                    $("#ulMoGender").html(data.SbFacetGender);
+                    $("#ulMoCategory").html(data.SbFacetBrand);
+                    $("#ulMoFrameType").html(data.SbFacetFrameType);
+                    $("#ulMoFrameShape").html(data.SbFacetFrameShape);
+                    $("#ulMoLensColor").html(data.SbFacetLensColor);
+                    $("#ulMoFrameColor").html(data.SbFacetFrameColor);
+                    /* End - Bind new facet data for Mobile view*/
+
+                    $("#div1").html(data.strGrid);
+                    $("#divgridlist").html(data.strlist);
+
+                    if ($('#div1').css('display') == 'block') {
+                        $("#divgridlist").hide();
+                        $("#div1").show();
+                    }
+                    else {
+                        $("#divgridlist").show();
+                        $("#div1").hide();
+                    }
+
+                    $('.page-results').html(data.TotalProduct + ' Results');
+                    $('#hdntotalrecord').val(data.TotalProduct.toString().replace(' Results', '').replace(' Result', ''));
+                    if ($('#hdntotalrecord').val() == '0') {
+                        $('.page-nav').hide();
+                    }
+                    else {
+                        $('.page-nav').show();
+                    }
+                    document.getElementById('hdnisexists').value = '0';
+                    $('.modal-backdrop').remove();
+                    allradio = $('#divsorradio').find('input');
+
+                    for (var i = 0; i < allradio.length; i++) {
+                        if (allradio[i].id == sortby) {
+                            allradio[i].checked = true;
+                        }
+                    }
+
+                    if ($('#hdnbrwosertype').val() == '1') {
+
+                        $('.filter-btn').click(function () {
+                            $(this).toggleClass('active').siblings().removeClass('active');
+                            if ($('.sort-box').hasClass('side-slide')) {
+                                $('.sort-box').toggleClass('side-slide');
+                            }
+
+                            $('.filter-box').toggleClass('side-slide');
+                            if (!$('.filter-box').hasClass('side-slide')) {
+                                $('.filter-box').addClass('side-slide');
+                            }
+
+                            $('#doc-width').addClass('body-active');
+
+                            $('.outer-tab-mob-desc').addClass('stickypro');
+                        });
+
+                        $('.filter-in-btn').click(function () {
+                            $(this).toggleClass('active');
+
+                        });
+
+                        $('.inner-tab-desc').hide();
+
+                        $('.filter-done').click(function () {
+                            $('.filter-btn, .sort-btn').removeClass('active');
+
+                            $('#doc-width').removeClass('body-active');
+                            $('.outer-tab-mob-desc').removeClass('stickypro');
+                        });
+                    }
+
+                    if ($('.inner-tab-desc').hasClass('active')) {
+                        $('.filter-in-btn').click();
+                        $('.inner-tab-desc').hide();
+                    }
+                    eval("$('.pro1').imagesRotation({interval: 1000,intervalFirst: 500,});");
+                },
+            });
+        }
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            /*Side Menu accordion Start*/
+            $('.side-box-sec-title').click(function () {
+                $(this).parent('.side-box-sec').toggleClass('active');
+            });
+            /*Side Menu accordion End*/
+            /*Wishlist Function Start*/
+            //$('.pro-list-wishlist').click(function () {
+            //    $(this).toggleClass('active');
+            //});
+            /*Wishlist Function End*/
+        });
+
+        /*Side Menu More and Less Functionality Start*/
+        function showList(id) {
+            var cc = $(id).html();
+            var dd = cc.split(" ");
+            if (dd[0] == 'More') {
+                $(id).html('Less ' + dd[1])
+            }
+            else if (dd[0] == 'Less') {
+                $(id).html('More ' + dd[1])
+            }
+            $(id).siblings('ul').toggleClass('limited-list')
+        };
+        /*Side Menu More and Less Functionality End*/
+    </script>
+
+
+    <script type="text/javascript">
+
+        $("#login-model-btn-pass").click(function () {
+            $('#login-model').hide();
+            $('#sign-up-model').show();
+
+        });
+
+        $("#forgot-model-btn-pass").click(function () {
+            $('#login-model').slideDown();
+            $('#forgot-model').slideUp();
+
+        });
+
+        $("#success-forgot-model-btn-pass").click(function () {
+            $('#login-model').slideDown();
+            $('#success-forgot-model').slideUp();
+
+        });
+
+        function funokay() {
+            $(function () {
+                $('#loginPopup').modal('toggle');
+            });
+        }
+
+        function showForgot() {
+            $("#login-model").slideUp();
+            $("#forgot-model").slideDown();
+
+        }
+
+        $("#login-model-btn-new").click(function () {
+            $('#login-model1').hide();
+            $('#sign-up-model').show();
+
+        });
+
+        $('#loginPopup').on('show.bs.modal', function () {
+            // do something…
+            $("#inputmail").val("");
+            $("#inputpassword1").val("");
+            $("#inputpassword").val("");
+            $('#login-model1').hide();
+            $('#login-model').hide();
+            $('#forgot-model').hide();
+            $("#success-forgot-model").hide();
+
+            $('#sign-up-model').show();
+            $("#inputmail").attr("autofocus", "autofocus")
+        })
+
+
+        function loginEmailEnter(event) {
+            var keyCode = ('which' in event) ? event.which : event.keyCode;
+            if (keyCode == 13) {
+                loginbymodel();
+            }
+        }
+
+        function proceedForgotPassword(event) {
+            var keyCode = ('which' in event) ? event.which : event.keyCode;
+            if (keyCode == 13) {
+                loginforgot();
+            }
+        }
+
+        function loginExistPasswordEnter(event) {
+            var keyCode = ('which' in event) ? event.which : event.keyCode;
+            if (keyCode == 13) {
+                loginfun();
+            }
+        }
+
+        function loginNewPasswordEnter(event) {
+            var keyCode = ('which' in event) ? event.which : event.keyCode;
+            if (keyCode == 13) {
+                createuser();
+            }
+
+
+        }
+        function Addtowishlist(pid) {
+            var price = 0;
+            $.post(url = "/Itempage/AddtoWishlist", { ProductId: pid.toString(), VariantNameId: '', VariantValueId: '', price: '0', Qty: '1' }, function (data) {
+                if (data.Returnurl.toString().toLowerCase().indexOf("login") > -1) {
+                    calllogin();
+                }
+                else {
+                    $('#wishlistCount').html(data.Returnurl.toString());
+                    $('#wish_' + pid.toString()).addClass('active');
+                    $('#wish_' + pid.toString() + ' i').removeClass('fa-heart-o');
+                    $('#wish_' + pid.toString() + ' i').addClass('fa-heart');
+                    $('#wish_' + pid.toString()).attr('onclick', 'Removefromwishlist(' + pid.toString() + ');');
+                }
+            });
+        }
+        function Removefromwishlist(pid) {
+            $.post(url = "/Itempage/RemoveItemFromWishList", { ProductID: pid.toString() }, function (data) {
+                $('#wishlistCount').html(data.WishCount.toString());
+                $('#wish_' + pid.toString()).removeClass('active');
+                $('#wish_' + pid.toString() + ' i').removeClass('fa-heart');
+                $('#wish_' + pid.toString() + ' i').addClass('fa-heart-o');
+                $('#wish_' + pid.toString()).attr('onclick', 'Addtowishlist(' + pid.toString() + ');');
+            });
+        }
+        function Addtowishlist(pid) {
+            var price = 0;
+            $.post(url = "/Itempage/AddtoWishlist", { ProductId: pid.toString(), VariantNameId: '', VariantValueId: '', price: '0', Qty: '1' }, function (data) {
+                if (data.Returnurl.toString().toLowerCase().indexOf("login") > -1) {
+                    calllogin();
+                }
+                else {
+                    $('#wishlistCount').html(data.Returnurl.toString());
+                    $('#wish_' + pid.toString()).addClass('active');
+                    $('#wish_' + pid.toString() + ' i').removeClass('fa-heart-o');
+                    $('#wish_' + pid.toString() + ' i').addClass('fa-heart');
+                    $('#wish_' + pid.toString()).attr('onclick', 'Removefromwishlist(' + pid.toString() + ');');
+                }
+            });
+        }
+        function Removefromwishlist(pid) {
+            $.post(url = "/Itempage/RemoveItemFromWishList", { ProductID: pid.toString() }, function (data) {
+                $('#wishlistCount').html(data.WishCount.toString());
+                $('#wish_' + pid.toString()).removeClass('active');
+                $('#wish_' + pid.toString() + ' i').removeClass('fa-heart');
+                $('#wish_' + pid.toString() + ' i').addClass('fa-heart-o');
+                $('#wish_' + pid.toString()).attr('onclick', 'Addtowishlist(' + pid.toString() + ');');
+            });
+        }
+
+        $(document).ready(function () {
+            @ViewBag
+        });
+    </script>
+
+</div>
